@@ -1,0 +1,7 @@
+name: LocationSync
+main: net.platzhaltergaming.locationsync.bukkit.Main
+author: "Alexander Trost"
+version: ${project.version}
+api-version: 1.18
+depend:
+  - Proton

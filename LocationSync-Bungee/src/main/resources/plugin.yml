@@ -1,0 +1,7 @@
+name: LocationSync
+main: net.platzhaltergaming.locationsync.bungee.Main
+author: "Alexander Trost"
+version: ${project.version}
+depends:
+  - Proton
+  - Protocolize

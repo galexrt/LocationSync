@@ -1,0 +1,6 @@
+{
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "yaml.schemas": {
+        "https://json.schemastore.org/bukkit-plugin.json": "file:///home/atrost/Projects/github.com/moderngaming-mc/LocationSync/pom.xml"
+    }
+}
