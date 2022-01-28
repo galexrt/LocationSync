@@ -56,12 +56,14 @@ public class LocationSyncModule implements Listener {
             return;
         }
         // Check if the player is (already) on the same server
-        String targetServer = event.getTarget().getName();
-        if (event.getPlayer().getServer().getInfo().getName().equals(targetServer)) {
+        if (event.getPlayer().getServer().getInfo().getName().equals(event.getTarget().getName())) {
             return;
         }
 
-        if (!checkIfServerIsEnabled(targetServer)) {
+        if (!checkIfServerIsEnabled(event.getTarget().getName())) {
+            return;
+        }
+        if (!checkIfServerIsEnabled(event.getPlayer().getServer().getInfo().getName())) {
             return;
         }
 
@@ -71,7 +73,7 @@ public class LocationSyncModule implements Listener {
         this.proton.send(Common.NAMESPACE, PlayerLocationRequest.SUBJECT,
                 new PlayerLocationRequest(player.uniqueId(), location.x(), location.y(), location.z(), location.yaw(),
                         location.pitch()),
-                targetServer);
+                        event.getTarget().getName());
     }
 
     protected boolean checkIfServerIsEnabled(String server) {
