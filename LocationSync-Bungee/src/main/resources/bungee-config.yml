@@ -1,3 +1,4 @@
 locationSync:
+  # Takes a list of regex patterns to enable the location sync for the server(s)
   enabledServers: []
   # - lobby-.+
