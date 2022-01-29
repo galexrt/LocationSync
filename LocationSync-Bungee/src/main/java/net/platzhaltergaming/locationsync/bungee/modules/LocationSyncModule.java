@@ -73,7 +73,7 @@ public class LocationSyncModule implements Listener {
         this.proton.send(Common.NAMESPACE, PlayerLocationRequest.SUBJECT,
                 new PlayerLocationRequest(player.uniqueId(), location.x(), location.y(), location.z(), location.yaw(),
                         location.pitch()),
-                        event.getTarget().getName());
+                event.getTarget().getName());
     }
 
     protected boolean checkIfServerIsEnabled(String server) {

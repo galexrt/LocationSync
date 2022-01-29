@@ -23,39 +23,12 @@
     </pluginRepository>
   </pluginRepositories>
 
-  <repositories>
-    <!-- BungeeCord -->
-    <repository>
-      <id>bungeecord-repo</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-    </repository>
-    <!-- Jitpack -->
-    <repository>
-      <id>jitpack.io</id>
-      <url>https://jitpack.io</url>
-    </repository>
-  </repositories>
-
   <dependencies>
     <!-- Lombok -->
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
       <version>1.18.20</version>
-      <scope>provided</scope>
-    </dependency>
-    <!-- Proton -->
-    <dependency>
-      <groupId>com.github.mcgrizzz</groupId>
-      <artifactId>Proton</artifactId>
-      <version>v1.3.0</version>
-      <scope>provided</scope>
-    </dependency>
-    <!-- Networker Common -->
-    <dependency>
-      <groupId>net.platzhaltergaming</groupId>
-      <artifactId>Networker-Common</artifactId>
-      <version>0.2.0</version>
       <scope>provided</scope>
     </dependency>
   </dependencies>
@@ -96,8 +69,7 @@
               <exclude>org.jetbrains:*</exclude>
             </excludes>
           </artifactSet>
-          <relocations>
-          </relocations>
+          <relocations></relocations>
           <filters>
             <filter>
               <artifact>*:*</artifact>
