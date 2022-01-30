@@ -16,6 +16,7 @@ public class Main extends JavaPlugin {
         // Base Setup (external APIs, etc.)
         this.proton = ProtonProvider.get();
 
+        // Modules
         locationSyncModule = new LocationSyncModule(this, this.proton);
         locationSyncModule.onEnable();
     }

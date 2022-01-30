@@ -10,6 +10,7 @@ import dev.simplix.protocolize.api.Protocolize;
 import dev.simplix.protocolize.api.player.ProtocolizePlayer;
 import dev.simplix.protocolize.api.providers.ProtocolizePlayerProvider;
 import dev.simplix.protocolize.data.listeners.PlayerPositionLookListener;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import me.drepic.proton.common.ProtonManager;
@@ -21,7 +22,7 @@ import net.platzhaltergaming.locationsync.bungee.Main;
 import net.platzhaltergaming.locationsync.common.requests.Common;
 import net.platzhaltergaming.locationsync.common.requests.PlayerLocationRequest;
 
-@Getter
+@Getter(AccessLevel.PROTECTED)
 @RequiredArgsConstructor
 public class LocationSyncModule implements Listener {
 
@@ -35,6 +36,7 @@ public class LocationSyncModule implements Listener {
 
     public void onEnable() {
         Configuration config = getPlugin().getConfig().getSection("locationSync");
+
         List<?> enabledServers = config.getList("enabledServers");
         enabledServers.forEach((server) -> {
             this.enabledServers.add(Pattern.compile((String) server));
@@ -60,6 +62,8 @@ public class LocationSyncModule implements Listener {
             return;
         }
 
+        // Make sure the current and target server are servers were LocationSync is
+        // enabled
         if (!checkIfServerIsEnabled(event.getTarget().getName())) {
             return;
         }
@@ -67,7 +71,12 @@ public class LocationSyncModule implements Listener {
             return;
         }
 
+        // Get Protocolize player data and send the PlayerLocationRequest to the
+        // player's target server
         ProtocolizePlayer player = PLAYER_PROVIDER.player(event.getPlayer().getUniqueId());
+        if (player == null) {
+            return;
+        }
         Location location = player.location();
 
         this.proton.send(Common.NAMESPACE, PlayerLocationRequest.SUBJECT,

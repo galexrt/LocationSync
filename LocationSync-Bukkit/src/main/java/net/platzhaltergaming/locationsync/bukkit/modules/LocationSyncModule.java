@@ -29,11 +29,14 @@ public class LocationSyncModule implements Listener {
     private final JavaPlugin plugin;
     private final ProtonManager proton;
 
+    private long locationExpireSeconds = 7;
+
+    // Why a cache? Because you don't want to keep player locations around forever
     private Cache<UUID, Location> locations;
 
     public void onEnable() {
         this.locations = Caffeine.newBuilder().maximumSize(plugin.getServer().getMaxPlayers())
-                .expireAfterWrite(7, TimeUnit.SECONDS).build();
+                .expireAfterWrite(this.locationExpireSeconds, TimeUnit.SECONDS).build();
 
         getPlugin().getServer().getPluginManager().registerEvents(this, getPlugin());
         this.proton.registerMessageHandlers(this);
@@ -44,6 +47,7 @@ public class LocationSyncModule implements Listener {
 
     @MessageHandler(namespace = Common.NAMESPACE, subject = PlayerLocationRequest.SUBJECT)
     public void onPlayerLocationRequest(PlayerLocationRequest request, MessageAttributes attributes) {
+        // Save the player location in the cache
         World world = getPlugin().getServer().getWorld("world");
         locations.put(request.getUniqueId(), new Location(world, request.getX(), request.getY(), request.getZ(),
                 request.getYaw(), request.getPitch()));
@@ -53,6 +57,7 @@ public class LocationSyncModule implements Listener {
     public void onPlayerJoinEvent(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
+        // Only teleport the player if a location is in the cache
         Location location = locations.getIfPresent(player.getUniqueId());
         if (location != null) {
             getPlugin().getServer().getScheduler().runTaskLater(getPlugin(), () -> {
