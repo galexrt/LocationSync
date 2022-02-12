@@ -64,10 +64,7 @@ public class LocationSyncModule implements Listener {
 
         // Make sure the current and target server are servers were LocationSync is
         // enabled
-        if (!checkIfServerIsEnabled(event.getTarget().getName())) {
-            return;
-        }
-        if (!checkIfServerIsEnabled(event.getPlayer().getServer().getInfo().getName())) {
+        if (!checkIfServersAreEnabled(event.getPlayer().getServer().getInfo().getName(), event.getTarget().getName())) {
             return;
         }
 
@@ -85,10 +82,11 @@ public class LocationSyncModule implements Listener {
                 event.getTarget().getName());
     }
 
-    protected boolean checkIfServerIsEnabled(String server) {
+    protected boolean checkIfServersAreEnabled(String source, String target) {
         for (Pattern pattern : this.enabledServers) {
-            Matcher matcher = pattern.matcher(server);
-            if (matcher.matches()) {
+            Matcher sourceMatch = pattern.matcher(source);
+            Matcher targetMatch = pattern.matcher(target);
+            if (sourceMatch.matches() && targetMatch.matches()) {
                 return true;
             }
         }
