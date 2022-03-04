@@ -1,0 +1,6 @@
+debug: false
+# The location is only synced when both the source server and target are matching
+# with the same pattern (e.g., source server `main-lobby-0` + target server `main-lobby-12`)
+# Takes a list of regex patterns to enable the location sync for the server(s)
+enabledServers: []
+  #- '^[@]?main-lobby'

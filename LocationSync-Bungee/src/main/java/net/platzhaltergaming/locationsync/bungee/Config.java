@@ -14,8 +14,6 @@ import java.util.stream.Collectors;
 
 public class Config {
 
-    private final String resourceConfigFileName = "bungee-config.yml";
-
     private final Plugin plugin;
     @Getter
     private Configuration config;
@@ -30,7 +28,7 @@ public class Config {
             this.plugin.getDataFolder().mkdir();
             try {
                 configFile.createNewFile();
-                try (InputStream is = this.plugin.getResourceAsStream(resourceConfigFileName);
+                try (InputStream is = this.plugin.getResourceAsStream("config.yml");
                         OutputStream os = new FileOutputStream(configFile)) {
                     ByteStreams.copy(is, os);
                 }
@@ -39,7 +37,7 @@ public class Config {
             }
         } else {
             try {
-                update(resourceConfigFileName, configFile);
+                update("config.yml", configFile);
             } catch (IOException e) {
                 throw new RuntimeException("Unable to save default configuration file.");
             }

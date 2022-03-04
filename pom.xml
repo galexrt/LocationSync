@@ -4,7 +4,7 @@
 
   <groupId>net.platzhaltergaming</groupId>
   <artifactId>LocationSync</artifactId>
-  <version>0.2.0</version>
+  <version>0.3.0</version>
 
   <modules>
     <module>LocationSync-Common</module>
