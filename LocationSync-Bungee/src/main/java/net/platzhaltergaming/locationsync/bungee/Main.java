@@ -59,7 +59,9 @@ public class Main extends Plugin implements Listener {
 
     @Override
     public void onDisable() {
-        Protocolize.listenerProvider().unregisterListener(this.playerPositionLookListener);
+        if (this.playerPositionLookListener != null) {
+            Protocolize.listenerProvider().unregisterListener(this.playerPositionLookListener);
+        }
     }
 
     public Configuration getConfig() {
