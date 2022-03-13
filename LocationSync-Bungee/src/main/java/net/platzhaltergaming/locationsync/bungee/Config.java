@@ -12,10 +12,10 @@ import java.io.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Getter
 public class Config {
 
     private final Plugin plugin;
-    @Getter
     private Configuration config;
 
     public Config(Plugin plugin) {
@@ -23,12 +23,12 @@ public class Config {
     }
 
     public void saveDefault() {
-        File configFile = new File(plugin.getDataFolder(), "config.yml");
+        File configFile = new File(getPlugin().getDataFolder(), "config.yml");
         if (!configFile.exists()) { // Simply save default config into datafolder
-            this.plugin.getDataFolder().mkdir();
+            getPlugin().getDataFolder().mkdir();
             try {
                 configFile.createNewFile();
-                try (InputStream is = this.plugin.getResourceAsStream("config.yml");
+                try (InputStream is = getPlugin().getResourceAsStream("config.yml");
                         OutputStream os = new FileOutputStream(configFile)) {
                     ByteStreams.copy(is, os);
                 }
@@ -47,7 +47,7 @@ public class Config {
 
     private void update(String newResource, File oldResource) throws IOException {
         Configuration newConfiguration = ConfigurationProvider.getProvider(YamlConfiguration.class)
-                .load(this.plugin.getResourceAsStream(newResource));
+                .load(getPlugin().getResourceAsStream(newResource));
         Configuration oldConfiguration = ConfigurationProvider.getProvider(YamlConfiguration.class).load(oldResource);
 
         List<String> newKeys = newConfiguration.getKeys().stream().filter(key -> !oldConfiguration.contains(key))
@@ -57,11 +57,11 @@ public class Config {
         });
 
         ConfigurationProvider.getProvider(YamlConfiguration.class).save(oldConfiguration,
-                new File(plugin.getDataFolder(), "config.yml"));
+                new File(getPlugin().getDataFolder(), "config.yml"));
     }
 
     public void load() {
-        File configFile = new File(plugin.getDataFolder(), "config.yml");
+        File configFile = new File(getPlugin().getDataFolder(), "config.yml");
         if (!configFile.exists()) {
             throw new RuntimeException("No config file exists");
         }
