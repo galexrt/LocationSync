@@ -60,9 +60,7 @@
       <resource>
         <directory>${project.basedir}/src/main/resources</directory>
         <filtering>true</filtering>
-        <includes>
-          <include>plugin.yml</include>
-        </includes>
+        <excludes></excludes>
       </resource>
     </resources>
     <plugins>
